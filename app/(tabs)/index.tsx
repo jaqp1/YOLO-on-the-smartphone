@@ -1,6 +1,8 @@
 import { ThemedText } from "@/components/themed-text";
 import "@/global.css";
 import { Redirect, useRouter } from "expo-router";
+import { Platform, StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Camera,
   useCameraDevice,
@@ -19,5 +21,14 @@ export default function HomeScreen() {
   if (redirectToPermissions) return <Redirect href={"/Permissions"} />;
   if (!device) return <></>;
 
-  return <ThemedText>Hello World</ThemedText>;
+  return (
+    <>
+      <SafeAreaView
+        className={`flex-1 ${Platform.OS === "android" ? StatusBar.currentHeight : 0}`}
+      >
+        <Camera className="flex-1" device={device} isActive />
+        <ThemedText></ThemedText>
+      </SafeAreaView>
+    </>
+  );
 }
